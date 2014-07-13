@@ -1,0 +1,16 @@
+setwd("C:/R")
+dfrm=read.table("household_power_consumption.txt",stringsAsFactor=FALSE,sep=";",header=TRUE)
+dfrm$Date=as.Date(dfrm$Date,"%d/%m/%Y")
+dfrml=dfrm[ dfrm$Date > "2007-01-31",]
+dffinal=dfrml[ dfrml$Date < "2007-02-03",]
+xxx=paste(dffinal$Date,dffinal$Time)
+yyy=strptime(xxx,"%Y-%m-%d %H:%M:%S")
+sm1=as.numeric(dffinal$Sub_metering_1)
+sm2=as.numeric(dffinal$Sub_metering_2)
+sm3=as.numeric(dffinal$Sub_metering_3)
+png("plot3.png",width=480,height=480)
+plot(yyy,sm1,type="l",xlab="",ylab="Energy sub metering",col=1)
+lines(yyy,sm2,col=2)
+lines(yyy,sm3,col=4)
+legend("topright",lty=1,col=c("black","red","blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
+dev.off()
